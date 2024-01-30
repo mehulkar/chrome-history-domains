@@ -3,6 +3,14 @@ import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import extractDomain from "extract-domain";
 
+// Path to your Chrome history file
+const historyPath = process.argv[2];
+if (!historyPath) {
+  throw new Error("Please provide the path to your Chrome history file");
+} else {
+  console.log(`Chrome history file: ${historyPath}`);
+}
+
 // Function to extract the domain from a URL
 async function getDomain(url) {
   try {
@@ -38,9 +46,6 @@ async function getUniqueDomains(historyPath) {
     db.close();
   }
 }
-
-// Path to your Chrome history file
-const historyPath = `${process.env.HOME}/Library/Application Support/Google/Chrome/Default/History`;
 
 // Call the function and log the output
 getUniqueDomains(historyPath).then((domains) => {
